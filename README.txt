@@ -94,6 +94,22 @@ Notes
   reader starts to handle it.  The ``BaseMultilineCSVReader`` has an
   example for this.
 
+- By default the excel csv dialect is used (or whatever your Python
+  version has as default).  If you want to use a specific dialect, you
+  can override the ``dialect`` variable in your reader class.  For
+  example, you can use tabs as delimiter like this::
+
+    import csv
+
+    class MyDialect(csv.excel):
+        delimiter = '\t'
+
+    csv.register_dialect('mydialect', MyDialect)
+
+    class ExampleCSVReader(BaseCSVReader):
+        dialect = 'mydialect'
+        fields = [...]
+
 
 Compatibility
 -------------

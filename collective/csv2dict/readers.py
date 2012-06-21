@@ -44,20 +44,14 @@ def to_text(v):
     return v.replace(NEWLINE_MARKER, '\n')
 
 
-class MyDialect(csv.excel):
-    #delimiter = '\t'
-    pass
-
-
-csv.register_dialect('mydialect', MyDialect)
-
-
 class BaseCSVReader(object):
 
     # This is the default encoding we try.
     encoding = 'utf-8'
     # Skip the columns with these indexes.  The first column has index 0.
     skip = []
+    # Registered csv dialect to use.  With None we use the standard.
+    dialect = None
 
     def prepare_iterable(self, iterable):
         """Do any preparing work to the iterable.
@@ -72,7 +66,10 @@ class BaseCSVReader(object):
         """Initialize.
         """
         iterable = self.prepare_iterable(iterable)
-        self.reader = csv.reader(iterable, 'mydialect')
+        if self.dialect is not None:
+            self.reader = csv.reader(iterable, self.dialect)
+        else:
+            self.reader = csv.reader(iterable)
         self.lineno = 0  # for more useful debug info
         self.ignored = 0  # Number of ignored lines
         self.success = 0  # Successfully imported lines
