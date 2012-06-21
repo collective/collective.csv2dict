@@ -4,7 +4,7 @@
 import logging
 from pprint import pprint
 
-logger = logging.getLogger('importers')
+logger = logging.getLogger('collective.csv2dict')
 NEWLINE_MARKER = '--NEWLINE--'
 
 
