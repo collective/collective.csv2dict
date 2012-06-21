@@ -5,7 +5,7 @@ version = '1.0.dev.0'
 setup(name='collective.csv2dict',
       version=version,
       description="Turn a csv into a dictionary with a predefined schema.",
-      long_description=open("README.txt").read() + "\n" +
+      long_description=open("README.rst").read() + "\n" +
                        open("CHANGES.txt").read(),
       # Get more strings from
       # http://pypi.python.org/pypi?%3Aaction=list_classifiers
