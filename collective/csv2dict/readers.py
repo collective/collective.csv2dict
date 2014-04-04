@@ -78,6 +78,14 @@ class BaseCSVReader(object):
         # encountering some bad data?
         self.raise_exceptions = raise_exceptions
 
+    def formatting(self):
+        info = {
+            'delimiter': self.reader.dialect.delimiter,
+            'dialect': self.reader.dialect,
+            'ncolumns': len(self.fields) + len(self.skip),
+            }
+        return info
+
     def decode_it(self, value):
         """Decode the string value to unicode.
 
