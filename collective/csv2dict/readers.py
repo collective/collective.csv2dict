@@ -68,7 +68,8 @@ class BaseCSVReader(object):
         """
         return iterable
 
-    def __init__(self, iterable, raise_exceptions=False):
+    def __init__(self, iterable, raise_exceptions=False,
+                 ignore_extra_columns=False):
         """Initialize.
         """
         iterable = self.prepare_iterable(iterable)
@@ -83,6 +84,8 @@ class BaseCSVReader(object):
         # Should we raise exceptions or just continue when
         # encountering some bad data?
         self.raise_exceptions = raise_exceptions
+        # Can we ignore unexpected extra columns?
+        self.ignore_extra_columns = ignore_extra_columns
 
     def formatting(self):
         info = {
@@ -147,6 +150,7 @@ class BaseCSVReader(object):
         we try a few times to get a working line.
         """
 
+        expected_columns = len(self.fields) + len(self.skip)
         tries = 0
         max_tries = 100
         while tries < max_tries:
@@ -167,14 +171,33 @@ class BaseCSVReader(object):
                     raise CSVImportError(msg)
                 continue
             else:
-                if len(items) == len(self.fields) + len(self.skip):
+                if len(items) == expected_columns:
                     # A good line found
+                    break
+                elif self.ignore_extra_columns \
+                        and len(items) > expected_columns:
+                    # A good enough line found.
+                    if self.lineno == 1:
+                        logger.warn(
+                            "No correct number of columns (%d instead of %d)."
+                            % (len(items), expected_columns))
+                    else:
+                        # Do the extra columns contain data?
+                        data = ''.join(items[expected_columns:])
+                        if data:
+                            extra = self.reader.dialect.delimiter.join(
+                                items[expected_columns:])
+                            logger.warn(
+                                "Line %d has incorrect number of columns "
+                                "(%d instead of %d) and they contain data: %r"
+                                % (self.lineno, len(items), expected_columns,
+                                   extra))
                     break
                 elif tries == 1:
                     # Bad line found on first try.
                     self.ignored += 1
                     error = ("No correct number of columns (%d instead of %d)."
-                             % (len(items), len(self.fields) + len(self.skip)))
+                             % (len(items), expected_columns))
                     msg = ("%s: line %d (row %d) ignored because of error: "
                            "%s" % (
                                self.__class__.__name__, self.lineno,
