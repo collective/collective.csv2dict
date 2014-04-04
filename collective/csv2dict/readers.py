@@ -48,6 +48,12 @@ class BaseCSVReader(object):
 
     # This is the default encoding we try.
     encoding = 'utf-8'
+    # The fields, in order of appearance.  Override at least this in
+    # your class.
+    fields = [
+        # The format is: (field name, filter method)
+        # Example: ('year', to_int),
+        ]
     # Skip the columns with these indexes.  The first column has index 0.
     skip = []
     # Registered csv dialect to use.  With None we use the standard.
