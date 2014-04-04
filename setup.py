@@ -6,12 +6,12 @@ setup(name='collective.csv2dict',
       version=version,
       description="Turn a csv into a dictionary with a predefined schema.",
       long_description=open("README.rst").read() + "\n" +
-                       open("CHANGES.rst").read(),
+      open("CHANGES.rst").read(),
       # Get more strings from
       # http://pypi.python.org/pypi?%3Aaction=list_classifiers
       classifiers=[
-        "Programming Language :: Python",
-        ],
+          "Programming Language :: Python",
+      ],
       keywords='',
       author='Maurits van Rees',
       author_email='m.van.rees@zestsoftware.nl',

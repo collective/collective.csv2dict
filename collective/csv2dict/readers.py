@@ -53,7 +53,7 @@ class BaseCSVReader(object):
     fields = [
         # The format is: (field name, filter method)
         # Example: ('year', to_int),
-        ]
+    ]
     # Skip the columns with these indexes.  The first column has index 0.
     skip = []
     # Registered csv dialect to use.  With None we use the standard.
@@ -89,7 +89,7 @@ class BaseCSVReader(object):
             'delimiter': self.reader.dialect.delimiter,
             'dialect': self.reader.dialect,
             'ncolumns': len(self.fields) + len(self.skip),
-            }
+        }
         return info
 
     def decode_it(self, value):
