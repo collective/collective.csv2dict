@@ -91,6 +91,7 @@ class BaseCSVReader(object):
         info = {
             'delimiter': self.reader.dialect.delimiter,
             'dialect': self.reader.dialect,
+            'encoding': self.encoding,
             'ncolumns': len(self.fields) + len(self.skip),
         }
         return info

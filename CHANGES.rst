@@ -10,8 +10,9 @@ Changelog
   [maurits]
 
 - Add ``formatting`` method to readers.  It currently returns the
-  delimiter, the dialect instance and the expected number of columns.
-  You can use this to give a hint in an upload form.
+  delimiter, the dialect instance, the encoding and the expected
+  number of columns.  You can use this to give a hint in an upload
+  form.
   [maurits]
 
 
