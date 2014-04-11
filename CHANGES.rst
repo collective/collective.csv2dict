@@ -2,7 +2,7 @@ Changelog
 =========
 
 
-1.1 (unreleased)
+1.1 (2014-04-11)
 ----------------
 
 - Optionally allow ignoring extra columns.  To use this: initialize
